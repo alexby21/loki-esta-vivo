@@ -122,7 +122,7 @@ class Payment(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     debt_id: str
-    customer_id: str
+    customer_id: Optional[str] = None
     customer_name: Optional[str] = None
     amount: float
     payment_method: str = "cash"  # cash, card, transfer
