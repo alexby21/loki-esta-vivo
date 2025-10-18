@@ -288,6 +288,12 @@ const DebtsPage = () => {
                       <span className="inline-flex items-center px-2 py-1 rounded-md bg-green-100 text-green-800 text-xs font-medium">
                         📅 {debt.installment_type}
                       </span>
+                      <span className="inline-flex items-center px-2 py-1 rounded-md bg-purple-100 text-purple-800 text-xs font-medium">
+                        💳 {debt.num_installments || 1} {debt.num_installments === 1 ? 'parcela' : 'parcelas'}
+                      </span>
+                      <span className="inline-flex items-center px-2 py-1 rounded-md bg-amber-100 text-amber-800 text-xs font-medium">
+                        💰 ${debt.installment_amount?.toFixed(2) || '0.00'} c/u
+                      </span>
                     </div>
                     <div className="flex gap-6 text-sm text-gray-500">
                       {debt.due_date && (
