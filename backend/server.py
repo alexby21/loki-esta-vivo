@@ -440,6 +440,48 @@ async def get_payments(customer_id: Optional[str] = None):
         deserialize_doc(payment)
     return payments
 
+@api_router.delete("/payments/{payment_id}")
+async def delete_payment(payment_id: str):
+    # Get payment details before deleting
+    payment = await db.payments.find_one({"id": payment_id})
+    if not payment:
+        raise HTTPException(status_code=404, detail="Pago no encontrado")
+    
+    # Get the debt
+    debt = await db.debts.find_one({"id": payment['debt_id']})
+    if debt:
+        # Revert the payment from debt
+        new_paid_amount = debt['paid_amount'] - payment['amount']
+        new_remaining = debt['remaining_amount'] + payment['amount']
+        
+        # Update debt status
+        if new_paid_amount == 0:
+            new_status = 'pending'
+        elif new_remaining > 0:
+            new_status = 'partial'
+        else:
+            new_status = 'paid'
+        
+        await db.debts.update_one(
+            {"id": payment['debt_id']},
+            {"$set": {
+                "paid_amount": new_paid_amount,
+                "remaining_amount": new_remaining,
+                "status": new_status
+            }}
+        )
+        
+        # Update customer totals
+        await db.customers.update_one(
+            {"id": payment['customer_id']},
+            {"$inc": {"total_paid": -payment['amount'], "total_debt": payment['amount']}}
+        )
+    
+    # Delete payment
+    await db.payments.delete_one({"id": payment_id})
+    
+    return {"message": "Pago eliminado y deuda actualizada"}
+
 # ============= DASHBOARD & REPORTS =============
 
 @api_router.get("/dashboard/stats", response_model=DashboardStats)
