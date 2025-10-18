@@ -26,7 +26,7 @@ const DebtsPage = () => {
   });
 
   useEffect(() => {
-    fetchData();
+    fetchDebts();
   }, []);
 
   useEffect(() => {
@@ -35,12 +35,8 @@ const DebtsPage = () => {
 
   const fetchData = async () => {
     try {
-      const [debtsRes, customersRes] = await Promise.all([
-        apiClient.get('/debts'),
-        apiClient.get('/customers'),
-      ]);
+      const debtsRes = await apiClient.get('/debts');
       setDebts(debtsRes.data);
-      setCustomers(customersRes.data);
     } catch (error) {
       toast.error('Error al cargar datos');
     } finally {
