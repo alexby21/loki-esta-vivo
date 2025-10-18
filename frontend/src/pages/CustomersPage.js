@@ -250,6 +250,16 @@ const CustomersPage = () => {
                     Deuda: ${customer.total_debt?.toFixed(2) || '0.00'}
                   </p>
                 </div>
+                <Button
+                  data-testid="customer-delete-paid-debts-button"
+                  onClick={() => handleDeletePaidDebts(customer.id, customer.name)}
+                  variant="outline"
+                  size="sm"
+                  className="w-full mt-2 flex items-center gap-2"
+                >
+                  <CheckCircle size={16} />
+                  Eliminar Deudas Pagadas
+                </Button>
               </CardContent>
             </Card>
           ))}
