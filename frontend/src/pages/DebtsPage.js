@@ -273,6 +273,14 @@ const DebtsPage = () => {
                       </span>
                     </div>
                     <p className="text-gray-600 mb-2" data-testid="debt-card-description">{debt.description}</p>
+                    <div className="flex gap-4 mb-2">
+                      <span className="inline-flex items-center px-2 py-1 rounded-md bg-blue-100 text-blue-800 text-xs font-medium">
+                        📦 {debt.product_type}
+                      </span>
+                      <span className="inline-flex items-center px-2 py-1 rounded-md bg-green-100 text-green-800 text-xs font-medium">
+                        📅 {debt.installment_type}
+                      </span>
+                    </div>
                     <div className="flex gap-6 text-sm text-gray-500">
                       {debt.due_date && (
                         <span data-testid="debt-card-duedate">
