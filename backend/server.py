@@ -354,12 +354,6 @@ async def delete_debt(debt_id: str):
     if not debt:
         raise HTTPException(status_code=404, detail="Deuda no encontrada")
     
-    # Update customer total debt
-    await db.customers.update_one(
-        {"id": debt['customer_id']},
-        {"$inc": {"total_debt": -debt['remaining_amount']}}
-    )
-    
     await db.debts.delete_one({"id": debt_id})
     return {"message": "Deuda eliminada"}
 
