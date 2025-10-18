@@ -7,7 +7,6 @@ const Layout = ({ children, user, onLogout }) => {
 
   const navItems = [
     { name: 'Dashboard', path: '/', icon: Home },
-    { name: 'Clientes', path: '/customers', icon: Users },
     { name: 'Ventas', path: '/debts', icon: CreditCard },
     { name: 'Pagos', path: '/payments', icon: DollarSign },
     { name: 'Reportes', path: '/reports', icon: FileText },
