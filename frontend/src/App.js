@@ -12,18 +12,6 @@ import Layout from './components/Layout';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 export const API = `${BACKEND_URL}/api`;
 
-// Set background image
-useEffect(() => {
-  document.body.style.backgroundImage = `url(${process.env.PUBLIC_URL}/background.png)`;
-  document.body.style.backgroundSize = 'cover';
-  document.body.style.backgroundPosition = 'center';
-  document.body.style.backgroundAttachment = 'fixed';
-  document.body.style.backgroundRepeat = 'no-repeat';
-  return () => {
-    document.body.style.backgroundImage = '';
-  };
-}, []);
-
 // Create axios instance with auth
 export const apiClient = axios.create({
   baseURL: API,
