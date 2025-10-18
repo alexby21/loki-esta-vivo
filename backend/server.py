@@ -89,6 +89,8 @@ class Debt(BaseModel):
     description: str
     product_type: str = "camisetas"  # camisetas, etc
     installment_type: str = "mensual"  # semanal, mensual
+    num_installments: int = 1  # número de parcelas
+    installment_amount: float = 0.0  # valor de cada parcela
     total_amount: float
     paid_amount: float = 0.0
     remaining_amount: float
@@ -101,8 +103,20 @@ class DebtCreate(BaseModel):
     description: str
     product_type: str = "camisetas"
     installment_type: str = "mensual"
+    num_installments: int = 1
     total_amount: float
     due_date: Optional[str] = None
+
+class Installment(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    debt_id: str
+    installment_number: int
+    amount: float
+    due_date: Optional[datetime] = None
+    paid: bool = False
+    payment_date: Optional[datetime] = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class Payment(BaseModel):
     model_config = ConfigDict(extra="ignore")
