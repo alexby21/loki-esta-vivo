@@ -13,12 +13,11 @@ import { es } from 'date-fns/locale';
 
 const DebtsPage = () => {
   const [debts, setDebts] = useState([]);
-  const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [filterStatus, setFilterStatus] = useState('all');
   const [formData, setFormData] = useState({
-    customer_id: '',
+    customer_name: '',
     description: '',
     product_type: 'camisetas',
     installment_type: 'mensual',
