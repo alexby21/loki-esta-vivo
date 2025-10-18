@@ -302,12 +302,6 @@ async def create_debt(debt_data: DebtCreate):
     doc = serialize_doc(debt.model_dump())
     await db.debts.insert_one(doc)
     
-    # Update customer total debt
-    await db.customers.update_one(
-        {"id": debt_data.customer_id},
-        {"$inc": {"total_debt": debt_data.total_amount}}
-    )
-    
     return debt
 
 @api_router.get("/debts", response_model=List[Debt])
