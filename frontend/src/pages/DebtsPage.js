@@ -15,6 +15,9 @@ const DebtsPage = () => {
   const [debts, setDebts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isInstallmentsDialogOpen, setIsInstallmentsDialogOpen] = useState(false);
+  const [selectedDebt, setSelectedDebt] = useState(null);
+  const [installments, setInstallments] = useState([]);
   const [filterStatus, setFilterStatus] = useState('all');
   const [formData, setFormData] = useState({
     customer_name: '',
