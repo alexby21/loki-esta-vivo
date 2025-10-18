@@ -87,6 +87,8 @@ class Debt(BaseModel):
     customer_id: str
     customer_name: Optional[str] = None
     description: str
+    product_type: str = "camisetas"  # camisetas, etc
+    installment_type: str = "mensual"  # semanal, mensual
     total_amount: float
     paid_amount: float = 0.0
     remaining_amount: float
@@ -97,6 +99,8 @@ class Debt(BaseModel):
 class DebtCreate(BaseModel):
     customer_id: str
     description: str
+    product_type: str = "camisetas"
+    installment_type: str = "mensual"
     total_amount: float
     due_date: Optional[str] = None
 
