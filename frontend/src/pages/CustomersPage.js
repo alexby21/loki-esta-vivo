@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from '@/components/ui/dialog';
 import { toast } from 'sonner';
-import { UserPlus, Search, Edit, Trash2 } from 'lucide-react';
+import { UserPlus, Search, Edit, Trash2, CheckCircle } from 'lucide-react';
 
 const CustomersPage = () => {
   const [customers, setCustomers] = useState([]);
