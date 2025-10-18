@@ -89,6 +89,9 @@ const PaymentsPage = () => {
           <DialogContent data-testid="payment-dialog">
             <DialogHeader>
               <DialogTitle data-testid="payment-dialog-title">Registrar Pago</DialogTitle>
+              <DialogDescription>
+                Registra un pago parcial o completo para una deuda
+              </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
