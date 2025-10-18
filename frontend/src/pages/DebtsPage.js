@@ -51,6 +51,8 @@ const DebtsPage = () => {
       setDebts(response.data);
     } catch (error) {
       toast.error('Error al cargar deudas');
+    } finally {
+      setLoading(false);
     }
   };
 
