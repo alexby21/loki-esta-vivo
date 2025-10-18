@@ -256,7 +256,7 @@ const DebtsPage = () => {
       ) : debts.length === 0 ? (
         <Card className="border-0 shadow-lg glass">
           <CardContent className="py-12 text-center text-gray-500">
-            No hay deudas registradas
+            No hay ventas registradas
           </CardContent>
         </Card>
       ) : (
