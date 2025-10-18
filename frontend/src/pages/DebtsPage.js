@@ -138,23 +138,15 @@ const DebtsPage = () => {
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="customer_id">Cliente *</Label>
-                <Select
-                  value={formData.customer_id}
-                  onValueChange={(value) => setFormData({ ...formData, customer_id: value })}
+                <Label htmlFor="customer_name">Nombre del Comprador *</Label>
+                <Input
+                  data-testid="debt-customer-input"
+                  id="customer_name"
+                  value={formData.customer_name}
+                  onChange={(e) => setFormData({ ...formData, customer_name: e.target.value })}
+                  placeholder="Ej: Juan Pérez"
                   required
-                >
-                  <SelectTrigger data-testid="debt-customer-select">
-                    <SelectValue placeholder="Selecciona un cliente" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {customers.map((customer) => (
-                      <SelectItem key={customer.id} value={customer.id}>
-                        {customer.name}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                />
               </div>
               <div>
                 <Label htmlFor="description">Descripción *</Label>
