@@ -297,13 +297,16 @@ const DebtsPage = () => {
                     <p className="text-2xl font-bold text-gray-800" data-testid="debt-card-total">${debt.total_amount.toFixed(2)}</p>
                     <p className="text-sm text-gray-600 mt-2">Pendiente</p>
                     <p className="text-xl font-bold text-red-600" data-testid="debt-card-remaining">${debt.remaining_amount.toFixed(2)}</p>
-                    <button
+                    <Button
                       data-testid="debt-delete-button"
                       onClick={() => handleDelete(debt.id)}
-                      className="mt-4 text-red-600 hover:text-red-800"
+                      variant="destructive"
+                      size="sm"
+                      className="mt-4 w-full flex items-center gap-2"
                     >
-                      <Trash2 size={20} />
-                    </button>
+                      <Trash2 size={16} />
+                      Eliminar Deuda
+                    </Button>
                   </div>
                 </div>
               </CardContent>
