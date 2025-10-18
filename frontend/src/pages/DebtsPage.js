@@ -88,6 +88,8 @@ const DebtsPage = () => {
     setFormData({
       customer_id: '',
       description: '',
+      product_type: 'camisetas',
+      installment_type: 'mensual',
       total_amount: '',
       due_date: '',
     });
