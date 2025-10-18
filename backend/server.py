@@ -453,13 +453,13 @@ async def delete_payment(payment_id: str):
 
 @api_router.get("/dashboard/stats", response_model=DashboardStats)
 async def get_dashboard_stats():
-    # Total customers
-    total_customers = await db.customers.count_documents({})
+    # Count unique customers from debts
+    debts_list = await db.debts.find({}, {"_id": 0}).to_list(10000)
+    unique_customers = len(set(debt.get('customer_name', '') for debt in debts_list))
     
-    # Get all customers to calculate totals
-    customers = await db.customers.find({}, {"_id": 0}).to_list(10000)
-    total_debts = sum(c.get('total_debt', 0) for c in customers)
-    total_paid = sum(c.get('total_paid', 0) for c in customers)
+    # Calculate totals from debts
+    total_debts = sum(debt.get('remaining_amount', 0) for debt in debts_list)
+    total_paid = sum(debt.get('paid_amount', 0) for debt in debts_list)
     
     # Overdue debts
     now = datetime.now(timezone.utc).isoformat()
@@ -475,7 +475,7 @@ async def get_dashboard_stats():
     recent_payments = [Payment(**doc) for doc in recent_payments_docs]
     
     return DashboardStats(
-        total_customers=total_customers,
+        total_customers=unique_customers,
         total_debts=total_debts,
         total_paid=total_paid,
         total_pending=total_debts,
