@@ -197,7 +197,24 @@ const DebtsPage = () => {
                 </Select>
               </div>
               <div>
-                <Label htmlFor="total_amount">Monto *</Label>
+                <Label htmlFor="num_installments">Número de Parcelas *</Label>
+                <Input
+                  data-testid="debt-installments-input"
+                  id="num_installments"
+                  type="number"
+                  min="1"
+                  value={formData.num_installments}
+                  onChange={(e) => setFormData({ ...formData, num_installments: parseInt(e.target.value) || 1 })}
+                  required
+                />
+                {formData.total_amount && formData.num_installments > 0 && (
+                  <p className="text-sm text-gray-600 mt-1">
+                    Valor de cada parcela: ${(parseFloat(formData.total_amount) / formData.num_installments).toFixed(2)}
+                  </p>
+                )}
+              </div>
+              <div>
+                <Label htmlFor="total_amount">Monto Total *</Label>
                 <Input
                   data-testid="debt-amount-input"
                   id="total_amount"
@@ -209,7 +226,7 @@ const DebtsPage = () => {
                 />
               </div>
               <div>
-                <Label htmlFor="due_date">Fecha de Vencimiento</Label>
+                <Label htmlFor="due_date">Fecha de Primer Vencimiento</Label>
                 <Input
                   data-testid="debt-duedate-input"
                   id="due_date"
