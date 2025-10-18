@@ -81,7 +81,7 @@ const DebtsPage = () => {
 
   const resetForm = () => {
     setFormData({
-      customer_id: '',
+      customer_name: '',
       description: '',
       product_type: 'camisetas',
       installment_type: 'mensual',
