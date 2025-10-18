@@ -207,6 +207,16 @@ const PaymentsPage = () => {
                     <p className="text-3xl font-bold text-green-600" data-testid="payment-card-amount">
                       ${payment.amount.toFixed(2)}
                     </p>
+                    <Button
+                      data-testid="payment-delete-button"
+                      onClick={() => handleDeletePayment(payment.id, payment.customer_name)}
+                      variant="destructive"
+                      size="sm"
+                      className="mt-4 flex items-center gap-2"
+                    >
+                      <Trash2 size={16} />
+                      Eliminar Pago
+                    </Button>
                   </div>
                 </div>
               </CardContent>
