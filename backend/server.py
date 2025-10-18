@@ -400,12 +400,6 @@ async def create_payment(payment_data: PaymentCreate):
         }}
     )
     
-    # Update customer
-    await db.customers.update_one(
-        {"id": debt['customer_id']},
-        {"$inc": {"total_paid": payment_data.amount, "total_debt": -payment_data.amount}}
-    )
-    
     return payment
 
 @api_router.get("/payments", response_model=List[Payment])
