@@ -373,14 +373,11 @@ async def create_payment(payment_data: PaymentCreate):
     if payment_data.amount > debt['remaining_amount']:
         raise HTTPException(status_code=400, detail="El monto excede la deuda pendiente")
     
-    # Get customer
-    customer = await db.customers.find_one({"id": debt['customer_id']})
-    
     # Create payment
     payment = Payment(
         debt_id=payment_data.debt_id,
-        customer_id=debt['customer_id'],
-        customer_name=customer['name'] if customer else None,
+        customer_id=debt.get('customer_id', ''),
+        customer_name=debt['customer_name'],
         amount=payment_data.amount,
         payment_method=payment_data.payment_method,
         notes=payment_data.notes
