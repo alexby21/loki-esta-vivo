@@ -13,9 +13,9 @@ const Layout = ({ children, user, onLogout }) => {
   ];
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-slate-50 via-stone-50 to-gray-100">
+    <div className="flex h-screen" style={{ background: 'transparent' }}>
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-lg border-r border-gray-200">
+      <aside className="w-64 shadow-lg border-r border-gray-200" style={{ background: 'rgba(255, 255, 255, 0.95)', backdropFilter: 'blur(10px)' }}>
         <div className="p-6 border-b border-gray-200">
           <h1 className="text-2xl font-bold text-gray-800" style={{ fontFamily: 'Playfair Display, serif' }}>
             SEMI DEUS ART
