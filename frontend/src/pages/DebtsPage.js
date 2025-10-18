@@ -133,6 +133,9 @@ const DebtsPage = () => {
           <DialogContent data-testid="debt-dialog">
             <DialogHeader>
               <DialogTitle data-testid="debt-dialog-title">Nueva Deuda</DialogTitle>
+              <DialogDescription>
+                Registra una nueva deuda para un cliente
+              </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
