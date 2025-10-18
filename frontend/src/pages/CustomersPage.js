@@ -87,6 +87,18 @@ const CustomersPage = () => {
     }
   };
 
+  const handleDeletePaidDebts = async (customerId, customerName) => {
+    if (window.confirm(`¿Eliminar todas las deudas pagadas de ${customerName}?`)) {
+      try {
+        const response = await apiClient.delete(`/customers/${customerId}/paid-debts`);
+        toast.success(response.data.message);
+        fetchCustomers(searchTerm);
+      } catch (error) {
+        toast.error('Error al eliminar deudas pagadas');
+      }
+    }
+  };
+
   const resetForm = () => {
     setFormData({
       name: '',
