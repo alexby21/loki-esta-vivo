@@ -443,12 +443,6 @@ async def delete_payment(payment_id: str):
                 "status": new_status
             }}
         )
-        
-        # Update customer totals
-        await db.customers.update_one(
-            {"id": payment['customer_id']},
-            {"$inc": {"total_paid": -payment['amount'], "total_debt": payment['amount']}}
-        )
     
     # Delete payment
     await db.payments.delete_one({"id": payment_id})
