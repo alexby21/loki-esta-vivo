@@ -154,7 +154,11 @@ def deserialize_doc(doc):
         datetime_fields = ['created_at', 'payment_date', 'due_date']
         for field in datetime_fields:
             if field in doc and isinstance(doc[field], str):
-                doc[field] = datetime.fromisoformat(doc[field])
+                dt = datetime.fromisoformat(doc[field])
+                # Ensure timezone awareness
+                if dt.tzinfo is None:
+                    dt = dt.replace(tzinfo=timezone.utc)
+                doc[field] = dt
     return doc
 
 # ============= AUTH ROUTES =============
