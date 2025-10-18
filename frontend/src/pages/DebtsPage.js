@@ -228,7 +228,7 @@ const DebtsPage = () => {
                 />
               </div>
               <Button data-testid="debt-submit-button" type="submit" className="w-full">
-                Crear Deuda
+                Crear Venta
               </Button>
             </form>
           </DialogContent>
