@@ -120,9 +120,9 @@ const DebtsPage = () => {
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-4xl font-bold text-gray-800 mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
-            Deudas
+            Ventas
           </h1>
-          <p className="text-gray-600">Gestiona las deudas de tus clientes</p>
+          <p className="text-gray-600">Gestiona las ventas de tus clientes</p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={(open) => {
           setIsDialogOpen(open);
@@ -131,14 +131,14 @@ const DebtsPage = () => {
           <DialogTrigger asChild>
             <Button data-testid="add-debt-button" className="flex items-center gap-2">
               <Plus size={20} />
-              Nueva Deuda
+              Crear Venta
             </Button>
           </DialogTrigger>
           <DialogContent data-testid="debt-dialog">
             <DialogHeader>
-              <DialogTitle data-testid="debt-dialog-title">Nueva Deuda</DialogTitle>
+              <DialogTitle data-testid="debt-dialog-title">Crear Nueva Venta</DialogTitle>
               <DialogDescription>
-                Registra una nueva deuda para un cliente
+                Registra una nueva venta para un cliente
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
