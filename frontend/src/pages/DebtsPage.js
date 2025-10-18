@@ -88,6 +88,7 @@ const DebtsPage = () => {
       description: '',
       product_type: 'camisetas',
       installment_type: 'mensual',
+      num_installments: 1,
       total_amount: '',
       due_date: '',
     });
