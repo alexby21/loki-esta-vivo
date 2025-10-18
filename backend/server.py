@@ -285,6 +285,8 @@ async def create_debt(debt_data: DebtCreate):
         customer_id=debt_data.customer_id,
         customer_name=customer['name'],
         description=debt_data.description,
+        product_type=debt_data.product_type,
+        installment_type=debt_data.installment_type,
         total_amount=debt_data.total_amount,
         remaining_amount=debt_data.total_amount,
         due_date=due_date
