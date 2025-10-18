@@ -305,7 +305,7 @@ const DebtsPage = () => {
                       className="mt-4 w-full flex items-center gap-2"
                     >
                       <Trash2 size={16} />
-                      Eliminar Deuda
+                      Eliminar Venta
                     </Button>
                   </div>
                 </div>
