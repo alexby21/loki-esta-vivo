@@ -408,11 +408,12 @@ async def pay_installment(installment_id: str):
         raise HTTPException(status_code=400, detail="Esta parcela ya está pagada")
     
     # Marcar parcela como pagada
+    payment_date = datetime.now(timezone.utc)
     await db.installments.update_one(
         {"id": installment_id},
         {"$set": {
             "paid": True,
-            "payment_date": datetime.now(timezone.utc).isoformat()
+            "payment_date": payment_date.isoformat()
         }}
     )
     
@@ -431,6 +432,20 @@ async def pay_installment(installment_id: str):
                 "status": new_status
             }}
         )
+        
+        # Crear registro de pago
+        payment = Payment(
+            debt_id=installment['debt_id'],
+            customer_id=debt.get('customer_id', ''),
+            customer_name=debt['customer_name'],
+            amount=installment['amount'],
+            payment_method='parcela',
+            notes=f"Pago de parcela {installment['installment_number']}",
+            payment_date=payment_date
+        )
+        
+        payment_doc = serialize_doc(payment.model_dump())
+        await db.payments.insert_one(payment_doc)
     
     return {"message": "Parcela pagada exitosamente"}
 
