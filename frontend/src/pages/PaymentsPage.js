@@ -56,6 +56,18 @@ const PaymentsPage = () => {
     }
   };
 
+  const handleDeletePayment = async (paymentId, customerName) => {
+    if (window.confirm(`¿Estás seguro de eliminar este pago de ${customerName}?`)) {
+      try {
+        await apiClient.delete(`/payments/${paymentId}`);
+        toast.success('Pago eliminado y deuda actualizada');
+        fetchData();
+      } catch (error) {
+        toast.error('Error al eliminar pago');
+      }
+    }
+  };
+
   const resetForm = () => {
     setFormData({
       debt_id: '',
