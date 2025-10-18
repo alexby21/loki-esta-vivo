@@ -85,6 +85,30 @@ const DebtsPage = () => {
     }
   };
 
+  const handleViewInstallments = async (debt) => {
+    setSelectedDebt(debt);
+    try {
+      const response = await apiClient.get(`/debts/${debt.id}/installments`);
+      setInstallments(response.data);
+      setIsInstallmentsDialogOpen(true);
+    } catch (error) {
+      toast.error('Error al cargar parcelas');
+    }
+  };
+
+  const handlePayInstallment = async (installmentId) => {
+    try {
+      await apiClient.put(`/installments/${installmentId}/pay`);
+      toast.success('Parcela pagada exitosamente');
+      // Recargar parcelas y ventas
+      const response = await apiClient.get(`/debts/${selectedDebt.id}/installments`);
+      setInstallments(response.data);
+      fetchDebts();
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Error al pagar parcela');
+    }
+  };
+
   const resetForm = () => {
     setFormData({
       customer_name: '',
