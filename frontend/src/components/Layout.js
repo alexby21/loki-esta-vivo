@@ -68,7 +68,7 @@ const Layout = ({ children, user, onLogout }) => {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 overflow-auto">
+      <main className="flex-1 overflow-auto" style={{ background: 'rgba(248, 249, 250, 0.85)', backdropFilter: 'blur(5px)' }}>
         <div className="p-8">{children}</div>
       </main>
     </div>
