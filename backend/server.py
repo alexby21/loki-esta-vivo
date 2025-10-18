@@ -84,8 +84,8 @@ class CustomerUpdate(BaseModel):
 class Debt(BaseModel):
     model_config = ConfigDict(extra="ignore")
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
-    customer_id: str
-    customer_name: Optional[str] = None
+    customer_id: Optional[str] = None
+    customer_name: str
     description: str
     product_type: str = "camisetas"  # camisetas, etc
     installment_type: str = "mensual"  # semanal, mensual
@@ -97,7 +97,7 @@ class Debt(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
 class DebtCreate(BaseModel):
-    customer_id: str
+    customer_name: str
     description: str
     product_type: str = "camisetas"
     installment_type: str = "mensual"
