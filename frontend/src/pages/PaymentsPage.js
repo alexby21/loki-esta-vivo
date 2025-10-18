@@ -199,7 +199,15 @@ const PaymentsPage = () => {
                       <p data-testid="payment-card-date">
                         📅 {format(new Date(payment.payment_date), 'PPP', { locale: es })}
                       </p>
-                      <p data-testid="payment-card-method">💳 Método: {payment.payment_method === 'cash' ? 'Efectivo' : payment.payment_method === 'card' ? 'Tarjeta' : 'Transferencia'}</p>
+                      <p data-testid="payment-card-method">
+                        💳 Método: {
+                          payment.payment_method === 'cash' ? 'Efectivo' : 
+                          payment.payment_method === 'card' ? 'Tarjeta' : 
+                          payment.payment_method === 'transfer' ? 'Transferencia' :
+                          payment.payment_method === 'parcela' ? '💳 Parcela' :
+                          payment.payment_method
+                        }
+                      </p>
                       {payment.notes && <p data-testid="payment-card-notes">📝 {payment.notes}</p>}
                     </div>
                   </div>
