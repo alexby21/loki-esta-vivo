@@ -42,7 +42,7 @@ const LoginPage = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-stone-50 to-gray-100 p-4">
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'transparent' }}>
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-5xl font-bold text-gray-800 mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>
