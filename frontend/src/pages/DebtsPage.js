@@ -172,6 +172,40 @@ const DebtsPage = () => {
                 />
               </div>
               <div>
+                <Label htmlFor="product_type">Tipo de Producto *</Label>
+                <Select
+                  value={formData.product_type}
+                  onValueChange={(value) => setFormData({ ...formData, product_type: value })}
+                >
+                  <SelectTrigger data-testid="debt-product-select">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="camisetas">Camisetas</SelectItem>
+                    <SelectItem value="pantalones">Pantalones</SelectItem>
+                    <SelectItem value="chaquetas">Chaquetas</SelectItem>
+                    <SelectItem value="accesorios">Accesorios</SelectItem>
+                    <SelectItem value="otros">Otros</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="installment_type">Tipo de Parcelación *</Label>
+                <Select
+                  value={formData.installment_type}
+                  onValueChange={(value) => setFormData({ ...formData, installment_type: value })}
+                >
+                  <SelectTrigger data-testid="debt-installment-select">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="semanal">Semanal</SelectItem>
+                    <SelectItem value="mensual">Mensual</SelectItem>
+                    <SelectItem value="unico">Pago Único</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
                 <Label htmlFor="total_amount">Monto *</Label>
                 <Input
                   data-testid="debt-amount-input"
