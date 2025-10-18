@@ -122,6 +122,9 @@ const CustomersPage = () => {
               <DialogTitle data-testid="customer-dialog-title">
                 {editingCustomer ? 'Editar Cliente' : 'Nuevo Cliente'}
               </DialogTitle>
+              <DialogDescription>
+                {editingCustomer ? 'Actualiza la información del cliente' : 'Completa el formulario para agregar un nuevo cliente'}
+              </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
