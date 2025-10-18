@@ -391,6 +391,49 @@ async def get_debt(debt_id: str):
     deserialize_doc(debt)
     return debt
 
+@api_router.get("/debts/{debt_id}/installments", response_model=List[Installment])
+async def get_debt_installments(debt_id: str):
+    installments = await db.installments.find({"debt_id": debt_id}, {"_id": 0}).sort("installment_number", 1).to_list(1000)
+    for inst in installments:
+        deserialize_doc(inst)
+    return installments
+
+@api_router.put("/installments/{installment_id}/pay")
+async def pay_installment(installment_id: str):
+    installment = await db.installments.find_one({"id": installment_id})
+    if not installment:
+        raise HTTPException(status_code=404, detail="Parcela no encontrada")
+    
+    if installment['paid']:
+        raise HTTPException(status_code=400, detail="Esta parcela ya está pagada")
+    
+    # Marcar parcela como pagada
+    await db.installments.update_one(
+        {"id": installment_id},
+        {"$set": {
+            "paid": True,
+            "payment_date": datetime.now(timezone.utc).isoformat()
+        }}
+    )
+    
+    # Actualizar la deuda
+    debt = await db.debts.find_one({"id": installment['debt_id']})
+    if debt:
+        new_paid_amount = debt['paid_amount'] + installment['amount']
+        new_remaining = debt['remaining_amount'] - installment['amount']
+        new_status = 'paid' if new_remaining <= 0.01 else 'partial'
+        
+        await db.debts.update_one(
+            {"id": installment['debt_id']},
+            {"$set": {
+                "paid_amount": new_paid_amount,
+                "remaining_amount": new_remaining,
+                "status": new_status
+            }}
+        )
+    
+    return {"message": "Parcela pagada exitosamente"}
+
 @api_router.delete("/debts/{debt_id}")
 async def delete_debt(debt_id: str):
     debt = await db.debts.find_one({"id": debt_id})
