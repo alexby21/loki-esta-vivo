@@ -73,13 +73,13 @@ const DebtsPage = () => {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('¿Estás seguro de eliminar esta deuda?')) {
+    if (window.confirm('¿Estás seguro de eliminar esta venta?')) {
       try {
         await apiClient.delete(`/debts/${id}`);
-        toast.success('Deuda eliminada');
+        toast.success('Venta eliminada');
         fetchDebts();
       } catch (error) {
-        toast.error('Error al eliminar deuda');
+        toast.error('Error al eliminar venta');
       }
     }
   };
