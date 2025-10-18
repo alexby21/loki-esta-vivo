@@ -339,11 +339,21 @@ const DebtsPage = () => {
                     <p className="text-sm text-gray-600 mt-2">Pendiente</p>
                     <p className="text-xl font-bold text-red-600" data-testid="debt-card-remaining">${debt.remaining_amount.toFixed(2)}</p>
                     <Button
+                      data-testid="debt-view-installments-button"
+                      onClick={() => handleViewInstallments(debt)}
+                      variant="outline"
+                      size="sm"
+                      className="mt-4 w-full flex items-center gap-2"
+                    >
+                      <List size={16} />
+                      Ver Parcelas
+                    </Button>
+                    <Button
                       data-testid="debt-delete-button"
                       onClick={() => handleDelete(debt.id)}
                       variant="destructive"
                       size="sm"
-                      className="mt-4 w-full flex items-center gap-2"
+                      className="mt-2 w-full flex items-center gap-2"
                     >
                       <Trash2 size={16} />
                       Eliminar Venta
@@ -355,6 +365,63 @@ const DebtsPage = () => {
           ))}
         </div>
       )}
+
+      {/* Installments Dialog */}
+      <Dialog open={isInstallmentsDialogOpen} onOpenChange={setIsInstallmentsDialogOpen}>
+        <DialogContent className="max-w-2xl" data-testid="installments-dialog">
+          <DialogHeader>
+            <DialogTitle>Parcelas de {selectedDebt?.customer_name}</DialogTitle>
+            <DialogDescription>
+              Gestiona las parcelas de esta venta
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 max-h-96 overflow-y-auto">
+            {installments.map((installment, index) => (
+              <Card key={installment.id} data-testid="installment-card" className={installment.paid ? 'bg-green-50' : ''}>
+                <CardContent className="p-4">
+                  <div className="flex justify-between items-center">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-bold text-lg">Parcela {installment.installment_number}</span>
+                        {installment.paid && (
+                          <span className="inline-flex items-center px-2 py-1 rounded-md bg-green-600 text-white text-xs font-medium">
+                            <CheckCircle2 size={12} className="mr-1" />
+                            PAGADA
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-gray-600 text-sm">
+                        Monto: <span className="font-bold">${installment.amount.toFixed(2)}</span>
+                      </p>
+                      {installment.due_date && (
+                        <p className="text-gray-500 text-xs">
+                          Vence: {format(new Date(installment.due_date), 'PPP', { locale: es })}
+                        </p>
+                      )}
+                      {installment.paid && installment.payment_date && (
+                        <p className="text-green-600 text-xs">
+                          Pagado: {format(new Date(installment.payment_date), 'PPP', { locale: es })}
+                        </p>
+                      )}
+                    </div>
+                    {!installment.paid && (
+                      <Button
+                        data-testid="pay-installment-button"
+                        onClick={() => handlePayInstallment(installment.id)}
+                        size="sm"
+                        className="flex items-center gap-2"
+                      >
+                        <CheckCircle2 size={16} />
+                        Marcar como Pagada
+                      </Button>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
