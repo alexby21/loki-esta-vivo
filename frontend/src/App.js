@@ -89,18 +89,6 @@ function App() {
             }
           />
           <Route
-            path="/customers"
-            element={
-              isAuthenticated ? (
-                <Layout user={user} onLogout={handleLogout}>
-                  <CustomersPage />
-                </Layout>
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
-          <Route
             path="/debts"
             element={
               isAuthenticated ? (
