@@ -268,6 +268,19 @@ async def delete_customer(customer_id: str):
         raise HTTPException(status_code=404, detail="Cliente no encontrado")
     return {"message": "Cliente eliminado"}
 
+@api_router.delete("/customers/{customer_id}/paid-debts")
+async def delete_paid_debts_for_customer(customer_id: str):
+    # Delete all paid debts for this customer
+    result = await db.debts.delete_many({
+        "customer_id": customer_id,
+        "status": "paid"
+    })
+    
+    return {
+        "message": f"{result.deleted_count} deudas pagadas eliminadas",
+        "deleted_count": result.deleted_count
+    }
+
 # ============= DEBT ROUTES =============
 
 @api_router.post("/debts", response_model=Debt)
