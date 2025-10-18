@@ -303,11 +303,16 @@ async def create_debt(debt_data: DebtCreate):
     if debt_data.due_date:
         due_date = datetime.fromisoformat(debt_data.due_date)
     
+    # Calcular el valor de cada parcela
+    installment_amount = debt_data.total_amount / debt_data.num_installments
+    
     debt = Debt(
         customer_name=debt_data.customer_name,
         description=debt_data.description,
         product_type=debt_data.product_type,
         installment_type=debt_data.installment_type,
+        num_installments=debt_data.num_installments,
+        installment_amount=installment_amount,
         total_amount=debt_data.total_amount,
         remaining_amount=debt_data.total_amount,
         due_date=due_date
@@ -315,6 +320,30 @@ async def create_debt(debt_data: DebtCreate):
     
     doc = serialize_doc(debt.model_dump())
     await db.debts.insert_one(doc)
+    
+    # Crear las parcelas
+    installments = []
+    for i in range(1, debt_data.num_installments + 1):
+        # Calcular fecha de vencimiento de cada parcela
+        installment_due_date = None
+        if due_date:
+            if debt_data.installment_type == "semanal":
+                installment_due_date = due_date + timedelta(weeks=(i-1))
+            elif debt_data.installment_type == "mensual":
+                installment_due_date = due_date + timedelta(days=30*(i-1))
+            else:  # único
+                installment_due_date = due_date
+        
+        installment = Installment(
+            debt_id=debt.id,
+            installment_number=i,
+            amount=installment_amount,
+            due_date=installment_due_date
+        )
+        
+        installment_doc = serialize_doc(installment.model_dump())
+        await db.installments.insert_one(installment_doc)
+        installments.append(installment)
     
     return debt
 
